@@ -18,7 +18,7 @@ def mongo_connect(url):
         print("Could not Connect to MongoDB: %s") % e
 
 
-conn = mongo_connect(MONGO_URI)           
+conn = mongo_connect(MONGO_URI)
 
 coll = conn[DATABASE][COLLECTION]
 
