@@ -12,11 +12,9 @@ COLLECTION = "celebrities"
 def mongo_connect(url):
     try:
         conn = pymongo.MongoClient(url)
-        print("Mongo is Connected")
         return conn
     except pymongo.errors.ConnectionFailure as e:
         print("Could not Connect to MongoDB: %s") % e
-
 
 
 def show_menu():
@@ -31,13 +29,30 @@ def show_menu():
     return option
 
 
+def get_record():
+    print("")
+    first = input("Enter first name > ")
+    last = input("Enter last name > ")
+
+    try:
+        doc = coll.find_one({"first":first.lower(), "last": last.lower()})
+    except:
+        print("Error accessing the database")
+
+    if not doc:
+        print("")    
+        print("Error! No result found.")
+
+    return doc    
+
+
 def add_record():
     print("")
     first = input("Enter first name > ")
     last = input("Enter last name > ")
     dob = input("Enter date of birth > ")
-    gender = input("Enter gender> ")
-    hair_color = input("Enter hair_color > ")
+    gender = input("Enter gender > ")
+    hair_color = input("Enter hair color > ")
     occupation = input("Enter occupation > ")
     nationality = input("Enter nationality > ")
 
@@ -52,12 +67,12 @@ def add_record():
     }
 
 
-try:
-    coll.insert(new_doc)
-    print("")
-    print("Document inserted")
-except:
-    print("Error accessing the database")
+    try:
+        coll.insert(new_doc)
+        print("")
+        print("Document inserted")
+    except:
+        print("Error accessing the Database")
 
 
 def main_loop():
